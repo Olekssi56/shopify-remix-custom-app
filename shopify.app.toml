@@ -3,7 +3,7 @@
 client_id = "4ef5f4d370fc099eb613f0bd04ca5c69"
 name = "test-app-remix"
 handle = "test-app-remix-11"
-application_url = "https://check-transformation-unique-midlands.trycloudflare.com"
+application_url = "https://newsletters-personal-moderator-time.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://check-transformation-unique-midlands.trycloudflare.com/auth/callback",
-  "https://check-transformation-unique-midlands.trycloudflare.com/auth/shopify/callback",
-  "https://check-transformation-unique-midlands.trycloudflare.com/api/auth/callback"
+  "https://newsletters-personal-moderator-time.trycloudflare.com/auth/callback",
+  "https://newsletters-personal-moderator-time.trycloudflare.com/auth/shopify/callback",
+  "https://newsletters-personal-moderator-time.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
