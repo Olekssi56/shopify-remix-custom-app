@@ -106,11 +106,8 @@ export default function Index() {
   return (
     <Page>
       <ui-title-bar title="QR codes">
-        <button variant="primary" onClick={() => {
-          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-          navigate("/app/qrcodes/new")
-          }}>
-          Create QR code
+        <button variant="primary" onClick={() => navigate("/app/qrcodes/new")}>
+         Insert new disable date
         </button>
       </ui-title-bar>
       <Layout>
