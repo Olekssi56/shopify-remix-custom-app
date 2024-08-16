@@ -42,3 +42,11 @@ model QRCode {
   scans            Int      @default(0)
   createdAt        DateTime @default(now())
 }
+
+model DisableDate {
+  id               Int      @id @default(autoincrement())
+  title            String
+  shop             String   @default("") // Provide a default value
+  date             DateTime @default(dbgenerated("(date('now'))")) // Default value set to the current date
+  createdAt        DateTime @default(now())
+}

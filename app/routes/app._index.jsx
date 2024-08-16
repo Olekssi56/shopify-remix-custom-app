@@ -13,28 +13,28 @@ import {
   InlineStack,
 } from "@shopify/polaris";
 
-import { getQRCodes } from "../models/QRCode.server";
+import { getDisableDates } from "../models/Date.server";
 import { AlertDiamondIcon, ImageIcon } from "@shopify/polaris-icons";
 
 export async function loader({ request }) {
   const { admin, session } = await authenticate.admin(request);
-  const qrCodes = await getQRCodes(session.shop, admin.graphql);
+  const dates = await getDisableDates(session.shop);
 
   return json({
-    qrCodes,
+    dates,
   });
 }
 
-const EmptyQRCodeState = ({ onAction }) => (
+const EmptyDateState = ({ onAction }) => (
   <EmptyState
-    heading="Create unique QR codes for your product"
+    heading="Insert Disable Date for Ship"
     action={{
-      content: "Create QR code",
+      content: "Insert Disable Date",
       onAction,
     }}
-    image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+    // image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
   >
-    <p>Allow customers to scan codes and buy products using their phones.</p>
+    <p>This is disable dates for ship</p>
   </EmptyState>
 );
 
@@ -44,79 +44,58 @@ function truncate(str, { length = 25 } = {}) {
   return str.slice(0, length) + "…";
 }
 
-const QRTable = ({ qrCodes }) => (
+const DateTable = ({ dates }) => (
   <IndexTable
     resourceName={{
-      singular: "QR code",
-      plural: "QR codes",
+      singular: "Disable date",
+      plural: "Disable dates",
     }}
-    itemCount={qrCodes.length}
+    itemCount={dates.length}
     headings={[
-      { title: "Thumbnail", hidden: true },
       { title: "Title" },
-      { title: "Product" },
-      { title: "Date created" },
-      { title: "Scans" },
+      { title: "Disable Date" },
+      { title: "Date created" }
     ]}
     selectable={false}
   >
-    {qrCodes.map((qrCode) => (
-      <QRTableRow key={qrCode.id} qrCode={qrCode} />
+    {dates.map((date) => (
+      <DateTableRow key={date.id} date={date} />
     ))}
   </IndexTable>
 );
 
-const QRTableRow = ({ qrCode }) => (
-  <IndexTable.Row id={qrCode.id} position={qrCode.id}>
+const DateTableRow = ({ date }) => (
+  <IndexTable.Row id={date.id} position={date.id}>    
     <IndexTable.Cell>
-      <Thumbnail
-        source={qrCode.productImage || ImageIcon}
-        alt={qrCode.productTitle}
-        size="small"
-      />
+      <Link to={`qrcodes/${date.id}`}>{truncate(date.title)}</Link>
     </IndexTable.Cell>
     <IndexTable.Cell>
-      <Link to={`qrcodes/${qrCode.id}`}>{truncate(qrCode.title)}</Link>
+      {new Date(date.date).toDateString()}
     </IndexTable.Cell>
     <IndexTable.Cell>
-      {qrCode.productDeleted ? (
-        <InlineStack align="start" gap="200">
-          <span style={{ width: "20px" }}>
-            <Icon source={AlertDiamondIcon} tone="critical" />
-          </span>
-          <Text tone="critical" as="span">
-            product has been deleted
-          </Text>
-        </InlineStack>
-      ) : (
-        truncate(qrCode.productTitle)
-      )}
+      {new Date(date.createdAt).toDateString()}
     </IndexTable.Cell>
-    <IndexTable.Cell>
-      {new Date(qrCode.createdAt).toDateString()}
-    </IndexTable.Cell>
-    <IndexTable.Cell>{qrCode.scans}</IndexTable.Cell>
   </IndexTable.Row>
 );
 
 export default function Index() {
-  const { qrCodes } = useLoaderData();
+  const { dates } = useLoaderData();
   const navigate = useNavigate();
 
   return (
     <Page>
-      <ui-title-bar title="QR codes">
-        <button variant="primary" onClick={() => navigate("/app/qrcodes/new")}>
-         Insert new disable date
+      <ui-title-bar title="Disable Dates">
+        <button variant="primary" onClick={() => navigate("/app/dates/new")}>
+          Insert new disable date
         </button>
       </ui-title-bar>
       <Layout>
         <Layout.Section>
           <Card padding="0">
-            {qrCodes.length === 0 ? (
-              <EmptyQRCodeState onAction={() => navigate("qrcodes/new")} />
+            {dates.length === 0 ? (
+              <EmptyDateState onAction={() => navigate("dates/new")} />
             ) : (
-              <QRTable qrCodes={qrCodes} />
+              <DateTable dates={dates} />
             )}
           </Card>
         </Layout.Section>
