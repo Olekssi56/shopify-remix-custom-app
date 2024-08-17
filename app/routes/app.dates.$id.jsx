@@ -21,7 +21,7 @@ import {
 } from "@shopify/polaris";
 
 import db from "../db.server";
-import { getDisableDates, validatDate } from "../models/Date.server";
+import { getDisableDate, validatDate } from "../models/Date.server";
 
 export async function loader({ request, params }) {
     const { admin } = await authenticate.admin(request);
@@ -33,7 +33,7 @@ export async function loader({ request, params }) {
         });
     }
 
-    return json(await getDisableDates(Number(params.id), admin.graphql));
+    return json(await getDisableDate(Number(params.id)));
 }
 
 export async function action({ request, params }) {
@@ -133,10 +133,10 @@ export default function DisableDateForm() {
                                 <Text as={"h2"} variant="headingLg">
                                     Select Date
                                 </Text>
-                                {errors.productId ? (
+                                {errors.date ? (
                                     <InlineError
-                                        message={errors.productId}
-                                        fieldID="myFieldID"
+                                        message={errors.date}
+                                        fieldID="date"
                                     />
                                 ) : null}
                                 <DatePicker

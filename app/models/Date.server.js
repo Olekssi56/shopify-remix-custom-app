@@ -87,7 +87,7 @@ export function validatDate(data) {
     errors.title = "Title is required";
   }
 
-  if (!data.date) {
+  if (!data.date || data.date == "undefined" ) {
     errors.date = "Date is required";
   }
 

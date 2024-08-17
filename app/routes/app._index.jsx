@@ -67,7 +67,7 @@ const DateTable = ({ dates }) => (
 const DateTableRow = ({ date }) => (
   <IndexTable.Row id={date.id} position={date.id}>    
     <IndexTable.Cell>
-      <Link to={`qrcodes/${date.id}`}>{truncate(date.title)}</Link>
+      <Link to={`dates/${date.id}`}>{truncate(date.title)}</Link>
     </IndexTable.Cell>
     <IndexTable.Cell>
       {new Date(date.date).toDateString()}
