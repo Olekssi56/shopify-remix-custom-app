@@ -3,7 +3,7 @@
 client_id = "4ef5f4d370fc099eb613f0bd04ca5c69"
 name = "test-app-remix"
 handle = "test-app-remix-11"
-application_url = "https://hear-noted-terrace-declare.trycloudflare.com"
+application_url = "https://proposed-serial-receive-ds.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://hear-noted-terrace-declare.trycloudflare.com/auth/callback",
-  "https://hear-noted-terrace-declare.trycloudflare.com/auth/shopify/callback",
-  "https://hear-noted-terrace-declare.trycloudflare.com/api/auth/callback"
+  "https://proposed-serial-receive-ds.trycloudflare.com/auth/callback",
+  "https://proposed-serial-receive-ds.trycloudflare.com/auth/shopify/callback",
+  "https://proposed-serial-receive-ds.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

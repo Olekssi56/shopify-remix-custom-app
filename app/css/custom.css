@@ -1,0 +1,7 @@
+.two-column-choice-list .Polaris-ChoiceList__Choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Two equal-width columns */
+    gap: 10px;
+    /* Space between the columns */
+}

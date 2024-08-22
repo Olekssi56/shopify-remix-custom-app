@@ -50,3 +50,8 @@ model DisableDate {
   date             DateTime @default(dbgenerated("(date('now'))")) // Default value set to the current date
   createdAt        DateTime @default(now())
 }
+
+model DisableDay {
+  id               Int      @id @default(autoincrement())
+  day_id            String  
+}

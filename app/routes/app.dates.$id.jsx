@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { json, redirect } from "@remix-run/node";
 import {
     useActionData,
@@ -69,6 +69,8 @@ export default function DisableDateForm() {
     const errors = useActionData()?.errors || {};
 
     const [{ month, year }, setDate] = useState({ month: new Date().getMonth(), year: new Date().getFullYear() });
+    const [disabledWeekdays, setDisabledWeekdays] = useState([]);
+
     const handleMonthChange = useCallback(
         (month, year) => setDate({ month, year }),
         [],
@@ -100,6 +102,28 @@ export default function DisableDateForm() {
         setCleanFormState({ ...formState });
         submit(data, { method: "post" });
     }
+
+    // Fetch the disabled weekdays from the server when the component mounts
+    useEffect(() => {
+        const fetchDisabledWeekdays = async () => {
+            try {
+                const response = await fetch('/api/get-disabled-days');
+                const days = await response.json();
+                setDisabledWeekdays(days); // Set fetched disabled days as selected in ChoiceList
+                
+            } catch (error) {
+                console.error('Error fetching disabled weekdays:', error);
+            }
+        };
+
+        fetchDisabledWeekdays();
+    }, []);
+
+    // Function to check if a date should be disabled based on its weekday
+    const isDateDisabled = (date) => {
+        const dayId = date.getDay();
+        return disabledWeekdays.includes(dayId + "");
+    };
 
     return (
         <Page>
@@ -148,6 +172,7 @@ export default function DisableDateForm() {
                                     }}
                                     onMonthChange={handleMonthChange}
                                     selected={selectedDates}
+                                    // disableDates={isDateDisabled}
                                 />
                             </BlockStack>
                         </Card>
